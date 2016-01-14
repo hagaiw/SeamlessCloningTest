@@ -117,7 +117,7 @@ struct AdjustIntegralBlurUniforms
   NSAssert(self.radius >= 0, @"Blur radius must be non-negative");
   
   NSInteger radius = self.radius;
-  int power = 1.0;
+  int power = 1.1;
   const int size = (round(radius) * 2) + 1;
   float *weights = malloc(sizeof(float) * size);
   float weightSum = 0;
@@ -130,7 +130,7 @@ struct AdjustIntegralBlurUniforms
     if (index == 0) {
       weight = 10;
     } else {
-      weight = fabs(1/(pow(index, power)));
+      weight = fabs(1/(2*(pow(index, power))));
     }
     weights[i] = weight;
     weightSum += weight;
