@@ -187,8 +187,8 @@ struct AdjustIntegralBlurUniforms
   [commandEncoder setBuffer:self.uniformBuffer offset:0 atIndex:0];
   
   if (!self.gaussianKernel1D) {
-//    [self gaussianCoefficients1D];
-    [self divCoefficients1D];
+    [self gaussianCoefficients1D];
+//    [self divCoefficients1D];
   }
     
   [commandEncoder setTexture:self.gaussianKernel1D atIndex:3];
@@ -244,6 +244,7 @@ struct AdjustIntegralBlurUniforms
   
   
   id<MTLCommandBuffer> commandBuffer = [self.context.commandQueue commandBuffer];
+  commandBuffer.label = @"Blur Buffer";
   id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
   [commandEncoder setComputePipelineState:self.pipeline];
   [commandEncoder setTexture:inputTexture atIndex:0];

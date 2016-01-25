@@ -7,8 +7,9 @@
  */
 
 #import <Metal/Metal.h>
+#import "MBETextureProvider.h"
 
-@interface AAPLTexture : NSObject
+@interface AAPLTexture : NSObject <MBETextureProvider>
 
 @property (nonatomic, readonly)  id <MTLTexture>  texture;
 @property (nonatomic, readonly)  MTLTextureType   target;

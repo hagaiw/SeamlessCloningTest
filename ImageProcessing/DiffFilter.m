@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) MBEContext *context;
 @property (nonatomic, strong) id<MTLComputePipelineState> pipeline;
 @property (nonatomic, strong) id<MTLBuffer> uniformBuffer;
+@property (nonatomic, strong) id<MTLCommandBuffer> commandBuffer;
 
 @end
 
@@ -68,13 +69,19 @@ struct OffsetUniforms
                                      [self.sourceTexture height] / threadgroupCounts.height,
                                      1);
   
-  id<MTLCommandBuffer> commandBuffer = [self.context.commandQueue commandBuffer];
+  if (!self.commandBuffer) {
+    self.commandBuffer = [self.context.commandQueue commandBuffer];
+    self.commandBuffer.label = @"Diff Buffer";
+  }
   
-  id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
+  
+  
+  id<MTLComputeCommandEncoder> commandEncoder = [self.commandBuffer computeCommandEncoder];
   [commandEncoder setComputePipelineState:self.pipeline];
   [commandEncoder setTexture:self.sourceTexture atIndex:0];
   [commandEncoder setTexture:self.targetTexture atIndex:1];
   [commandEncoder setTexture:self.diffTexture atIndex:2];
+  commandEncoder.label = @"Diff Encoder";
   
   
   
@@ -83,7 +90,7 @@ struct OffsetUniforms
   [commandEncoder dispatchThreadgroups:threadgroups threadsPerThreadgroup:threadgroupCounts];
   [commandEncoder endEncoding];
   
-  [commandBuffer commit];
+  [self.commandBuffer commit];
 //  [commandBuffer waitUntilCompleted];
   return self.diffTexture;
 }

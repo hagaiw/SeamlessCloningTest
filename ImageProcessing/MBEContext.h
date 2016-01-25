@@ -18,4 +18,6 @@
 
 + (instancetype)newContext;
 
+- (instancetype)initWithDevice:(id<MTLDevice>)device;
+
 @end

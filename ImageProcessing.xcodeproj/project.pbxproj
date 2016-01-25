@@ -24,6 +24,21 @@
 		8371184319DBA3AD003CB787 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8371184219DBA3AD003CB787 /* Images.xcassets */; };
 		8371184619DBA3AD003CB787 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8371184419DBA3AD003CB787 /* LaunchScreen.xib */; };
 		83E00AD119E48CE0003B8E7B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8305802119E0C45000F24135 /* Shaders.metal */; };
+		FA11C1F11C56412F0029A146 /* AAPLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA11C1F01C56412F0029A146 /* AAPLView.mm */; };
+		FA11C1F41C5641F00029A146 /* AAPLTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA11C1F31C5641F00029A146 /* AAPLTexture.mm */; };
+		FA11C1F71C5641F90029A146 /* AAPLQuad.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA11C1F61C5641F90029A146 /* AAPLQuad.mm */; };
+		FA11C1FA1C5643380029A146 /* AAPLTransforms.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA11C1F91C5643380029A146 /* AAPLTransforms.mm */; };
+		FA11C1FC1C56464A0029A146 /* Default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA11C1FB1C56464A0029A146 /* Default.jpg */; };
+		FA11C1FE1C565D120029A146 /* bear.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA11C1FD1C565D120029A146 /* bear.jpg */; };
+		FA11C2031C5669730029A146 /* 64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = FA11C1FF1C5669730029A146 /* 64x64.png */; };
+		FA11C2041C5669730029A146 /* 128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = FA11C2001C5669730029A146 /* 128x128.png */; };
+		FA11C2051C5669730029A146 /* 256x256.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA11C2011C5669730029A146 /* 256x256.jpg */; };
+		FA11C2061C5669730029A146 /* 512x512.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA11C2021C5669730029A146 /* 512x512.jpg */; };
+		FA11C2081C56778B0029A146 /* 1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = FA11C2071C56778B0029A146 /* 1024x1024.png */; };
+		FA11C20A1C5678CB0029A146 /* 1024x512.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA11C2091C5678CB0029A146 /* 1024x512.jpg */; };
+		FA4AC1671C54F615007F1C31 /* MyViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA4AC1661C54F615007F1C31 /* MyViewController.mm */; };
+		FA4AC1741C54FE0B007F1C31 /* MyImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4AC1731C54FE0B007F1C31 /* MyImageFilter.m */; };
+		FA4AC1781C5503BB007F1C31 /* MyBlurFilterEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4AC1771C5503BB007F1C31 /* MyBlurFilterEncoder.m */; };
 		FACAFBE41C467BBF0025958A /* GaussianBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAFBE31C467BBF0025958A /* GaussianBlur.m */; };
 		FACAFBE71C468BD70025958A /* DiffFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAFBE61C468BD70025958A /* DiffFilter.m */; };
 		FACAFBEA1C469B3F0025958A /* MultiplyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAFBE91C469B3F0025958A /* MultiplyFilter.m */; };
@@ -60,6 +75,29 @@
 		8371184019DBA3AD003CB787 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8371184219DBA3AD003CB787 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8371184519DBA3AD003CB787 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		FA11C1EF1C56412F0029A146 /* AAPLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLView.h; sourceTree = "<group>"; };
+		FA11C1F01C56412F0029A146 /* AAPLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLView.mm; sourceTree = "<group>"; };
+		FA11C1F21C5641F00029A146 /* AAPLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLTexture.h; sourceTree = "<group>"; };
+		FA11C1F31C5641F00029A146 /* AAPLTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLTexture.mm; sourceTree = "<group>"; };
+		FA11C1F51C5641F90029A146 /* AAPLQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLQuad.h; sourceTree = "<group>"; };
+		FA11C1F61C5641F90029A146 /* AAPLQuad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLQuad.mm; sourceTree = "<group>"; };
+		FA11C1F81C5643380029A146 /* AAPLTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLTransforms.h; sourceTree = "<group>"; };
+		FA11C1F91C5643380029A146 /* AAPLTransforms.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLTransforms.mm; sourceTree = "<group>"; };
+		FA11C1FB1C56464A0029A146 /* Default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Default.jpg; sourceTree = "<group>"; };
+		FA11C1FD1C565D120029A146 /* bear.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bear.jpg; sourceTree = "<group>"; };
+		FA11C1FF1C5669730029A146 /* 64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 64x64.png; sourceTree = "<group>"; };
+		FA11C2001C5669730029A146 /* 128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 128x128.png; sourceTree = "<group>"; };
+		FA11C2011C5669730029A146 /* 256x256.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 256x256.jpg; sourceTree = "<group>"; };
+		FA11C2021C5669730029A146 /* 512x512.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 512x512.jpg; sourceTree = "<group>"; };
+		FA11C2071C56778B0029A146 /* 1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1024x1024.png; sourceTree = "<group>"; };
+		FA11C2091C5678CB0029A146 /* 1024x512.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1024x512.jpg; sourceTree = "<group>"; };
+		FA4AC1651C54F615007F1C31 /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
+		FA4AC1661C54F615007F1C31 /* MyViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyViewController.mm; sourceTree = "<group>"; };
+		FA4AC1721C54FE0B007F1C31 /* MyImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyImageFilter.h; sourceTree = "<group>"; };
+		FA4AC1731C54FE0B007F1C31 /* MyImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyImageFilter.m; sourceTree = "<group>"; };
+		FA4AC1751C550319007F1C31 /* MyEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyEncoder.h; sourceTree = "<group>"; };
+		FA4AC1761C5503BB007F1C31 /* MyBlurFilterEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBlurFilterEncoder.h; sourceTree = "<group>"; };
+		FA4AC1771C5503BB007F1C31 /* MyBlurFilterEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBlurFilterEncoder.m; sourceTree = "<group>"; };
 		FACAFBE21C467BBF0025958A /* GaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GaussianBlur.h; sourceTree = "<group>"; };
 		FACAFBE31C467BBF0025958A /* GaussianBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GaussianBlur.m; sourceTree = "<group>"; };
 		FACAFBE51C468BD70025958A /* DiffFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffFilter.h; sourceTree = "<group>"; };
@@ -103,8 +141,8 @@
 				835A0B4019E6237700C5BCB3 /* MBEContext.m */,
 				835A0B4819E6244500C5BCB3 /* MBEMainBundleTextureProvider.h */,
 				835A0B4919E6244500C5BCB3 /* MBEMainBundleTextureProvider.m */,
-				835A0B4219E623D400C5BCB3 /* MBETextureConsumer.h */,
 				835A0B4519E623E900C5BCB3 /* MBETextureProvider.h */,
+				835A0B4219E623D400C5BCB3 /* MBETextureConsumer.h */,
 				835A0B5519E626B100C5BCB3 /* UIImage+MBETextureUtilities.h */,
 				835A0B5619E626B100C5BCB3 /* UIImage+MBETextureUtilities.m */,
 			);
@@ -117,6 +155,8 @@
 				8371183919DBA3AD003CB787 /* AppDelegate.h */,
 				8371183A19DBA3AD003CB787 /* AppDelegate.m */,
 				8371183C19DBA3AD003CB787 /* MBEViewController.h */,
+				FA4AC1651C54F615007F1C31 /* MyViewController.h */,
+				FA4AC1661C54F615007F1C31 /* MyViewController.mm */,
 				8371183D19DBA3AD003CB787 /* MBEViewController.mm */,
 				8371183F19DBA3AD003CB787 /* Main.storyboard */,
 				8371184419DBA3AD003CB787 /* LaunchScreen.xib */,
@@ -166,6 +206,8 @@
 		8371183419DBA3AD003CB787 /* ImageProcessing */ = {
 			isa = PBXGroup;
 			children = (
+				FA4AC1791C5515C1007F1C31 /* Apple Example Classes */,
+				FA4AC16C1C54FC1D007F1C31 /* MyFilters */,
 				83116A2319EB321D003E2EC4 /* User Interface */,
 				83116A2219EB31FF003E2EC4 /* Image Processing */,
 				835A0B5419E6267E00C5BCB3 /* Filters */,
@@ -182,6 +224,41 @@
 				8371183719DBA3AD003CB787 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA4AC16C1C54FC1D007F1C31 /* MyFilters */ = {
+			isa = PBXGroup;
+			children = (
+				FA4AC1721C54FE0B007F1C31 /* MyImageFilter.h */,
+				FA4AC1731C54FE0B007F1C31 /* MyImageFilter.m */,
+				FA4AC1751C550319007F1C31 /* MyEncoder.h */,
+				FA4AC1761C5503BB007F1C31 /* MyBlurFilterEncoder.h */,
+				FA4AC1771C5503BB007F1C31 /* MyBlurFilterEncoder.m */,
+				FA11C1FD1C565D120029A146 /* bear.jpg */,
+				FA11C1FF1C5669730029A146 /* 64x64.png */,
+				FA11C2001C5669730029A146 /* 128x128.png */,
+				FA11C2011C5669730029A146 /* 256x256.jpg */,
+				FA11C2021C5669730029A146 /* 512x512.jpg */,
+				FA11C2071C56778B0029A146 /* 1024x1024.png */,
+				FA11C2091C5678CB0029A146 /* 1024x512.jpg */,
+			);
+			name = MyFilters;
+			sourceTree = "<group>";
+		};
+		FA4AC1791C5515C1007F1C31 /* Apple Example Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FA11C1EF1C56412F0029A146 /* AAPLView.h */,
+				FA11C1F01C56412F0029A146 /* AAPLView.mm */,
+				FA11C1F21C5641F00029A146 /* AAPLTexture.h */,
+				FA11C1F31C5641F00029A146 /* AAPLTexture.mm */,
+				FA11C1F51C5641F90029A146 /* AAPLQuad.h */,
+				FA11C1F61C5641F90029A146 /* AAPLQuad.mm */,
+				FA11C1F81C5643380029A146 /* AAPLTransforms.h */,
+				FA11C1F91C5643380029A146 /* AAPLTransforms.mm */,
+				FA11C1FB1C56464A0029A146 /* Default.jpg */,
+			);
+			name = "Apple Example Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,8 +319,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8371184119DBA3AD003CB787 /* Main.storyboard in Resources */,
+				FA11C20A1C5678CB0029A146 /* 1024x512.jpg in Resources */,
+				FA11C1FE1C565D120029A146 /* bear.jpg in Resources */,
+				FA11C2081C56778B0029A146 /* 1024x1024.png in Resources */,
+				FA11C2041C5669730029A146 /* 128x128.png in Resources */,
+				FA11C2061C5669730029A146 /* 512x512.jpg in Resources */,
 				8371184619DBA3AD003CB787 /* LaunchScreen.xib in Resources */,
+				FA11C2051C5669730029A146 /* 256x256.jpg in Resources */,
 				8371184319DBA3AD003CB787 /* Images.xcassets in Resources */,
+				FA11C2031C5669730029A146 /* 64x64.png in Resources */,
+				FA11C1FC1C56464A0029A146 /* Default.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,15 +339,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA11C1F71C5641F90029A146 /* AAPLQuad.mm in Sources */,
+				FA4AC1781C5503BB007F1C31 /* MyBlurFilterEncoder.m in Sources */,
 				FACAFBEA1C469B3F0025958A /* MultiplyFilter.m in Sources */,
 				83E00AD119E48CE0003B8E7B /* Shaders.metal in Sources */,
 				FACAFBE41C467BBF0025958A /* GaussianBlur.m in Sources */,
 				FACAFBE71C468BD70025958A /* DiffFilter.m in Sources */,
 				FACAFBED1C469F2D0025958A /* FinalFilter.m in Sources */,
+				FA11C1F11C56412F0029A146 /* AAPLView.mm in Sources */,
 				8371183E19DBA3AD003CB787 /* MBEViewController.mm in Sources */,
+				FA11C1FA1C5643380029A146 /* AAPLTransforms.mm in Sources */,
 				835A0B4A19E6244500C5BCB3 /* MBEMainBundleTextureProvider.m in Sources */,
 				8371183B19DBA3AD003CB787 /* AppDelegate.m in Sources */,
 				835A0B4D19E624B400C5BCB3 /* MBEImageFilter.m in Sources */,
+				FA4AC1741C54FE0B007F1C31 /* MyImageFilter.m in Sources */,
+				FA4AC1671C54F615007F1C31 /* MyViewController.mm in Sources */,
+				FA11C1F41C5641F00029A146 /* AAPLTexture.mm in Sources */,
 				835A0B5019E6251A00C5BCB3 /* MBESaturationAdjustmentFilter.m in Sources */,
 				835A0B4119E6237700C5BCB3 /* MBEContext.m in Sources */,
 				835A0B5319E6264400C5BCB3 /* MBEGaussianBlur2DFilter.m in Sources */,

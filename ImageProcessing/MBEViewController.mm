@@ -36,6 +36,10 @@
 @property (nonatomic, strong) dispatch_queue_t renderingQueue;
 @property (atomic, assign) uint64_t jobIndex;
 
+
+/// Display link used to trigger all the animations.
+@property (strong, nonatomic) CADisplayLink *displayLink;
+
 @end
 
 @implementation MBEViewController
@@ -48,6 +52,13 @@
 
     [self buildFilterGraph];
     [self updateImage];
+  
+  self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(loop:)];
+  [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void) loop:(CADisplayLink *)sender {
+  [self updateImage];
 }
 
 - (void)buildFilterGraph
@@ -66,21 +77,6 @@
   
   self.outline  = [MBEMainBundleTextureProvider textureProviderWithImageNamed:@"outline"
                                                                                                context:self.context];
-  
-//  self.finalFilter = self.diffFilter;
-  
-  
-//
-//  self.blurFilterVertical = [MBEGaussianBlur2DFilter filterWithRadius:self.blurRadiusSlider.value
-//                                                              context:self.context blurType:BlurTypeVertical];
-//  self.blurFilterVertical.provider = self.imageProvider;
-//  
-//  
-//  self.blurFilterHorizontal = [MBEGaussianBlur2DFilter filterWithRadius:self.blurRadiusSlider.value
-//                                                                context:self.context blurType:BlurTypeHorizontal];
-//  self.blurFilterHorizontal.provider = self.blurFilterVertical;
-//  
-//  self.blurFilterOutput = self.gaussianBlur2D;
 }
 
 - (void)updateImage
@@ -91,8 +87,6 @@
   // Grab these values while we're still on the main thread, since we could
   // conceivably get incomplete values by reading them in the background.
   float blurRadius = self.blurRadiusSlider.value;
-  
-  
   float xOffset = self.saturationSlider.value;
   float yOffset = self.ySlider.value;
   

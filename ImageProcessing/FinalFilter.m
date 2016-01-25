@@ -70,6 +70,7 @@ struct OffsetUniforms
                                      1);
   
   id<MTLCommandBuffer> commandBuffer = [self.context.commandQueue commandBuffer];
+  commandBuffer.label = @"Final Buffer";
   
   id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
   [commandEncoder setComputePipelineState:self.pipeline];
@@ -83,10 +84,11 @@ struct OffsetUniforms
   [commandEncoder setBuffer:self.uniformBuffer offset:0 atIndex:0];
   
   [commandEncoder dispatchThreadgroups:threadgroups threadsPerThreadgroup:threadgroupCounts];
+  commandEncoder.label = @"Final Encoder";
   [commandEncoder endEncoding];
   
   [commandBuffer commit];
-  [commandBuffer waitUntilCompleted];
+//  [commandBuffer waitUntilCompleted];
   return self.outputTexture;
 }
 

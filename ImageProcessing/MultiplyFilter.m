@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
                                      1);
   
   id<MTLCommandBuffer> commandBuffer = [self.context.commandQueue commandBuffer];
+  commandBuffer.label = @"Multiply Buffer";
   
   id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
   [commandEncoder setComputePipelineState:self.pipeline];
@@ -58,6 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
   [commandEncoder setTexture:self.targetTexture atIndex:1];
   [commandEncoder setTexture:self.diffTexture atIndex:2];
   [commandEncoder dispatchThreadgroups:threadgroups threadsPerThreadgroup:threadgroupCounts];
+  commandEncoder.label = @"Multiply Encoder";
   [commandEncoder endEncoding];
   
   [commandBuffer commit];

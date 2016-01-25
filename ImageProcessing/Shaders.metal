@@ -85,6 +85,7 @@ kernel void gaussian_blur_integral(texture2d<float, access::read> inTexture [[te
 //    outTexture.write(float4(accumColor.rgb, 1), gid);
 }
 
+
 kernel void gaussian_blur_horizontal(texture2d<float, access::read> inTexture [[texture(0)]],
                              texture2d<float, access::read> integralImage [[texture(1)]],
                              texture2d<float, access::write> outTexture [[texture(2)]],
@@ -178,4 +179,63 @@ kernel void final(texture2d<float, access::read> mixTexture [[texture(0)]],
   
 }
 
+
+
+
+
+
+
+
+
+
+// Rec 709 LUMA values for grayscale image conversion
+constant half3 kRec709Luma = half3(0.2126, 0.7152, 0.0722);
+
+// Grayscale compute shader
+kernel void grayscale(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                      texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                      uint2                          gid         [[ thread_position_in_grid ]])
+{
+  if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+  {
+    half4 inColor  = inTexture.read(gid);
+    half  gray     = dot(inColor.rgb, kRec709Luma);
+    half4 outColor = half4(gray, gray, gray, 1.0);
+    
+    outTexture.write(outColor, gid);
+  }
+}
+
+// Vertex input/output structure for passing results
+// from a vertex shader to a fragment shader
+struct VertexIO
+{
+  float4 m_Position [[position]];
+  float2 m_TexCoord [[user(texturecoord)]];
+};
+
+// Vertex shader for a textured quad
+vertex VertexIO texturedQuadVertex(device float4         *pPosition   [[ buffer(0) ]],
+                                   device packed_float2  *pTexCoords  [[ buffer(1) ]],
+                                   constant float4x4     &MVP         [[ buffer(2) ]],
+                                   uint                   vid         [[ vertex_id ]])
+{
+  VertexIO outVertices;
+  
+  outVertices.m_Position = MVP * pPosition[vid];
+  outVertices.m_TexCoord = pTexCoords[vid];
+  
+  return outVertices;
+}
+
+// Fragment shader for a textured quad
+fragment half4 texturedQuadFragment(VertexIO         inFrag  [[ stage_in ]],
+                                    texture2d<half>  tex2D   [[ texture(0) ]])
+{
+  constexpr sampler quadSampler;
+  
+  half4 color = tex2D.sample(quadSampler, inFrag.m_TexCoord);
+  
+  return color;
+}
 
