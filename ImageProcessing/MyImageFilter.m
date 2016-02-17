@@ -7,6 +7,8 @@
 #import <Metal/Metal.h>
 #import "MyEncoder.h"
 
+@import MetalPerformanceShaders;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MyImageFilter ()
@@ -18,10 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id<MTLFunction> kernelFunction;
 @property (nonatomic) MTLSize threadgroups;
 @property (nonatomic) MTLSize threadgroupCounts;
+@property (nonatomic, strong) id<MTLTexture> integralImage;
 
 @end
 
 @implementation MyImageFilter
+
+struct AdjustIntegralBlurUniforms
+{
+  float blurRadius;
+};
+
 
 #pragma mark -
 #pragma mark Initialization
@@ -48,6 +57,62 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Processing
 #pragma mark -
+
+- (void)configureArgumentTableWithCommandEncoder:(id<MTLComputeCommandEncoder>)commandEncoder
+{
+  struct AdjustIntegralBlurUniforms uniforms;
+  uniforms.blurRadius = 50;
+  if (!self.uniformBuffer)
+  {
+    self.uniformBuffer = [self.context.device newBufferWithLength:sizeof(uniforms)
+                                                          options:MTLResourceOptionCPUCacheModeDefault];
+  }
+  memcpy([self.uniformBuffer contents], &uniforms, sizeof(uniforms));
+  [commandEncoder setBuffer:self.uniformBuffer offset:0 atIndex:0];
+}
+
+
+- (void)encodeIntegralImageToCommandBuffer:(id<MTLCommandBuffer>)commandBuffer
+                                  provider:(id<MBETextureProvider>)provider {
+  id<MTLTexture> inputTexture = provider.texture;
+  
+  commandBuffer.label = @"Blur Command Buffer";
+  
+  
+  // If input texture dimensions changed, reset the internal texture.
+  if (!self.internalTexture ) {
+    self.internalTexture = [self outputTextureWithInputTexture:[provider texture]];
+  }
+
+  self.threadgroups = MTLSizeMake([inputTexture width] / self.threadgroupCounts.width,
+                                  [inputTexture height] / self.threadgroupCounts.height,
+                                  1);
+  
+  if (!self.integralImage) {
+    MTLTextureDescriptor *descriptor2 = [MTLTextureDescriptor
+                                         texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA32Float
+                                         width:self.internalTexture.width
+                                         height:self.internalTexture.height
+                                         mipmapped:NO];
+    self.integralImage = [self.context.device newTextureWithDescriptor:descriptor2];
+  }
+  
+  MPSImageIntegral *integral = [[MPSImageIntegral alloc] initWithDevice:self.context.device];
+  [integral encodeToCommandBuffer:commandBuffer
+                    sourceTexture:inputTexture
+               destinationTexture:self.integralImage];
+  
+  
+  id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
+  [commandEncoder setComputePipelineState:self.pipeline];
+  [commandEncoder setTexture:inputTexture atIndex:0];
+  [commandEncoder setTexture:self.integralImage atIndex:1];
+  [commandEncoder setTexture:self.internalTexture atIndex:2];
+  [self configureArgumentTableWithCommandEncoder:commandEncoder];
+  [commandEncoder dispatchThreadgroups:self.threadgroups threadsPerThreadgroup:self.threadgroupCounts];
+  [commandEncoder endEncoding];
+  
+}
 
 - (void)encodeToCommandBuffer:(id<MTLCommandBuffer>)commandBuffer
                   withEncoder:(id<MyEncoder>)encoder provider:(id<MBETextureProvider>)provider {

@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) MyImageFilter *horizontalBlurFilter;
 @property (strong, nonatomic) MyImageFilter *verticalBlurFilter;
+@property (strong, nonatomic) MyImageFilter *integralBlurFilter;
 
 @property (strong, nonatomic) id<MBETextureProvider> sourceProvider;
 
@@ -201,8 +202,12 @@ static const uint32_t kInFlightCommandBuffers = 3;
   
   id <MTLCommandBuffer> commandBuffer = [m_CommandQueue commandBuffer];
   
+  for (NSUInteger i=0; i<20; ++i) {
+    [[self integralBlurFilter] encodeIntegralImageToCommandBuffer:commandBuffer provider:mpInTexture];
+  }
+  
   // compute image processing on the (same) drawable texture
-  [self processImageWithCommandBuffer:commandBuffer];
+//  [self processImageWithCommandBuffer:commandBuffer];
   
   // create a render command encoder so we can render into something
   MTLRenderPassDescriptor *renderPassDescriptor = view.renderPassDescriptor;
@@ -298,7 +303,7 @@ static const uint32_t kInFlightCommandBuffers = 3;
     assert(0);
   }
   
-  if(![self prepareTexturedQuad:@"128x128" ext:@"png"])
+  if(![self prepareTexturedQuad:@"512x512" ext:@"jpg"])
   {
     NSLog(@">> ERROR: Failed creating a textured quad!");
     
@@ -398,8 +403,8 @@ static const uint32_t kInFlightCommandBuffers = 3;
 
 - (BOOL) prepareCompute
 {
-  
-  m_OutTexture = [self.verticalBlurFilter outputTextureWithInputTexture:mpInTexture.texture];
+//  m_OutTexture = [self.verticalBlurFilter outputTextureWithInputTexture:mpInTexture.texture];
+  m_OutTexture = [self.integralBlurFilter outputTextureWithInputTexture:mpInTexture.texture];
   return YES;
   NSError *pError = nil;
   
@@ -557,6 +562,9 @@ static const uint32_t kInFlightCommandBuffers = 3;
   
   self.verticalBlurFilter = [[MyImageFilter alloc] initWithFunctionName:@"gaussian_blur_vertical"
                                                                 context:self.context];
+  
+  self.integralBlurFilter = [[MyImageFilter alloc] initWithFunctionName:@"gaussian_blur_integral"
+                                                                context:self.context];
 
   m_OutTexture = self.verticalBlurFilter.internalTexture;
   
@@ -569,7 +577,8 @@ static const uint32_t kInFlightCommandBuffers = 3;
   
   
   float blurRadius = self.blurRadiusSlider.value;
-//  float blurRadius = 100;
+//  NSLog(@"%lf", blurRadius);
+  blurRadius = 20;
   
   self.horizontalBlurEncoder = [[MyBlurFilterEncoder alloc] initWithBlurRadius:blurRadius
                                                                         device:self.context.device
@@ -595,70 +604,6 @@ static const uint32_t kInFlightCommandBuffers = 3;
   }
 }
 
-- (void)updateImage {
-  ++self.jobIndex;
-  uint64_t currentJobIndex = self.jobIndex;
-  
-  // Grab these values while we're still on the main thread, since we could
-  // conceivably get incomplete values by reading them in the background.
-  float blurRadius = self.blurRadiusSlider.value;
-  float xOffset = self.xSlider.value;
-  float yOffset = self.ySlider.value;
-  CGSize offset = CGSizeMake(xOffset, yOffset);
-  
-  
-  
-  dispatch_async(self.renderingQueue, ^{
-    if (currentJobIndex != self.jobIndex) {
-      return;
-    }
-    
-    self.horizontalBlurEncoder = [[MyBlurFilterEncoder alloc] initWithBlurRadius:blurRadius
-                                                                          device:self.context.device
-                                                                           label:@"Horizontal Blur Encoder"];
-    
-    self.verticalBlurEncoder = [[MyBlurFilterEncoder alloc] initWithBlurRadius:blurRadius
-                                                                        device:self.context.device
-                                                                         label:@"vertical Blur Encoder"];
-    
-    
-    CFTimeInterval start = CACurrentMediaTime();
-    
-    id<MTLCommandBuffer> tempCommandBuffer = [self.context.commandQueue commandBuffer];
-    
-    [self processImageWithCommandBuffer:tempCommandBuffer];
-    
-    [tempCommandBuffer commit];
-    [tempCommandBuffer waitUntilCompleted];
-    
-//    self.diffFilter  = [[DiffFilter alloc] initWithSource:self.source target:self.target targetOffset:offset context:self.context];
-//    
-//    MultiplyFilter *diffMultipliedByBoundary = [[MultiplyFilter alloc] initWithSource:[self.diffFilter texture] target:self.outline targetOffset:offset context:self.context];
-    
-    
-//    GaussianBlur *blurredDiffBoundary = [[GaussianBlur alloc] initWithContext:self.context provider:diffMultipliedByBoundary blurRadius:blurRadius];
-//    
-//    GaussianBlur *blurredBoundary = [[GaussianBlur alloc] initWithContext:self.context provider:self.outline blurRadius:blurRadius];
-//    
-//    self.finalFilter = [[FinalFilter alloc] initWithMix:[self.blurFilter texture] boundary:[self.blurFilter texture] source:self.source target:self.target mask:self.mask targetOffset:offset context:self.context];
-    
-//    id<MTLTexture> texture = self.finalFilter.texture;
-    
-    CFTimeInterval end = CACurrentMediaTime();
-    NSUInteger numSamples = 2*((blurRadius*2)+1);
-    NSLog(@"Time: %g ms for   radius: %f  samples: %lu", (end - start) * 1e3, blurRadius, (unsigned long)numSamples);
-    
-    id<MTLTexture> outputTexture = [[self.verticalBlurFilter texture] newTextureViewWithPixelFormat:MTLPixelFormatRGBA8Unorm];
-    UIImage *image = [UIImage imageWithMTLTexture:outputTexture];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      self.imageView.image = image;
-    });
-  });
-  
-  
-  
-}
-
 #pragma mark -
 #pragma mark DisplayLink
 #pragma mark -
@@ -666,15 +611,6 @@ static const uint32_t kInFlightCommandBuffers = 3;
 - (void) loop:(CADisplayLink *)sender {
 //  [self updateImage];
   [(AAPLView *)self.view display];
-}
-
-#pragma mark -
-#pragma mark UIElements
-#pragma mark -
-
-- (IBAction)blurRadiusDidChange:(id)sender
-{
-  [self updateImage];
 }
 
 @end

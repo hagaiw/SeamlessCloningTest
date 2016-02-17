@@ -41,7 +41,6 @@ struct OffsetUniforms
 kernel void gaussian_blur_integral(texture2d<float, access::read> inTexture [[texture(0)]],
                              texture2d<float, access::read> integralImage [[texture(1)]],
                              texture2d<float, access::write> outTexture [[texture(2)]],
-                             texture2d<float, access::read> weights [[texture(3)]],
                              constant AdjustIntegralBlurUniforms &uniforms [[buffer(0)]],
                              uint2 gid [[thread_position_in_grid]])
 {
@@ -63,6 +62,7 @@ kernel void gaussian_blur_integral(texture2d<float, access::read> inTexture [[te
   
   float4 boxBlurColor = (topLeftValue - bottomLeftValue - topRightValue + bottomRightValue) / (radius * radius * 4);
   outTexture.write(float4(boxBlurColor.rgb, 1), gid);
+//  outTexture.write(float4(0.5), gid);
   
 //  outTexture.write(float4(boxBlurColor.rgb, 1), gid);
   
@@ -178,14 +178,6 @@ kernel void final(texture2d<float, access::read> mixTexture [[texture(0)]],
   outputTexture.write(result,gid);
   
 }
-
-
-
-
-
-
-
-
 
 
 // Rec 709 LUMA values for grayscale image conversion

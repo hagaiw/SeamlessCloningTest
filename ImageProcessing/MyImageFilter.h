@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)encodeToCommandBuffer:(id<MTLCommandBuffer>)commandBuffer
                   withEncoder:(id<MyEncoder>)encoder provider:(id<MBETextureProvider>)provider;
 
+- (void)encodeIntegralImageToCommandBuffer:(id<MTLCommandBuffer>)commandBuffer
+                                  provider:(id<MBETextureProvider>)provider;
+
 - (id<MTLTexture>)outputTextureWithInputTexture:(id<MTLTexture>)texture;
 
 @property (nonatomic, strong) id<MTLTexture> internalTexture;
